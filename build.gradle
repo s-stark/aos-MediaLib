@@ -39,6 +39,14 @@ android {
         community {}
     }
 
+    task bootstrapLIBmysofa(type:Exec) {
+       workingDir = "../native/libmysofa-android-builder"
+       List<String> myCmd = new ArrayList<String>()
+       myCmd.add("bash")
+       myCmd.add("bootstrap_avp_libmysofa.sh")
+       commandLine myCmd
+    }
+
     task bootstrapFFmpeg(type:Exec) {
        workingDir = "../native/ffmpeg-android-builder"
        List<String> myCmd = new ArrayList<String>()
@@ -58,6 +66,7 @@ android {
         commandLine myCmd
     }
 
+    bootstrapFFmpeg.dependsOn bootstrapLIBmysofa
     ndkBuild.dependsOn bootstrapFFmpeg
 
     task ndkClean(type:Exec) {
